@@ -2,7 +2,7 @@ FROM wodby/nginx-actions-alpine:dev
 MAINTAINER Ivan Gaas <ivan.gaas@gmail.com>
 
 RUN export NGX_VER="1.9.3" && \
-    export NGX_UP_VER="0.9.0" && \
+    export NGX_UP_VER="0.9.1" && \
     export NGX_LUA_VER="0.9.16" && \
     export NGX_NDK_VER="0.2.19" && \
     export NGX_NXS_VER="0.54rc3" && \
