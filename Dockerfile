@@ -13,7 +13,7 @@ RUN export NGX_VER="1.9.3" && \
 ## Download nginx and its modules source code
     wget -qO- http://nginx.org/download/nginx-${NGX_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/simpl/ngx_devel_kit/archive/v${NGX_NDK_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/downloads/masterzen/nginx-upload-progress-module/archive/nginx_uploadprogress_module-${NGX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
+    wget -qO- https://github.com/downloads/masterzen/nginx-upload-progress-module/archive/v${NGX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/openresty/lua-nginx-module/archive/v${NGX_LUA_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/nbs-system/naxsi/archive/${NGX_NXS_VER}.tar.gz | tar xz -C /tmp/ && \
 ## Make and install nginx with module
@@ -29,7 +29,7 @@ RUN export NGX_VER="1.9.3" && \
       --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-mail \
       --with-mail_ssl_module --with-http_spdy_module --with-ipv6 --with-threads --with-stream --with-stream_ssl_module \
       --with-http_geoip_module --with-ld-opt="-Wl,-rpath,/usr/lib/" --add-module=/tmp/ngx_devel_kit-${NGX_NDK_VER}/ \
-      --add-module=/tmp/masterzen-nginx-upload-progress-module-a788dea/ --add-module=/tmp/lua-nginx-module-${NGX_LUA_VER}/ \
+      --add-module=/tmp/nginx-upload-progress-module-${NGX_UP_VER}/ --add-module=/tmp/lua-nginx-module-${NGX_LUA_VER}/ \
       --add-module=/tmp/naxsi-${NGX_NXS_VER}/naxsi_src/ && make -j2 && make install && \
 ## Clean packages
     apk del openssl-dev pcre-dev zlib-dev luajit-dev geoip-dev build-base autoconf libtool && \
