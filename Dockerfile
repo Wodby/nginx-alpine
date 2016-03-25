@@ -13,7 +13,7 @@ RUN export NGX_VER="1.9.3" && \
 ## Download nginx and its modules source code
     wget -qO- http://nginx.org/download/nginx-${NGX_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/simpl/ngx_devel_kit/archive/v${NGX_NDK_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/downloads/masterzen/nginx-upload-progress-module/nginx_uploadprogress_module-${NGX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
+    wget -qO- https://github.com/downloads/masterzen/nginx-upload-progress-module/archive/nginx_uploadprogress_module-${NGX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/openresty/lua-nginx-module/archive/v${NGX_LUA_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/nbs-system/naxsi/archive/${NGX_NXS_VER}.tar.gz | tar xz -C /tmp/ && \
 ## Make and install nginx with module
