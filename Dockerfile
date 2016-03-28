@@ -40,6 +40,8 @@ RUN export NGX_VER="1.9.3" && \
     mkdir -p /var/lib/nginx/tmp && \
     chmod 755 /var/lib/nginx && \
     chmod -R 777 /var/lib/nginx/tmp && \
+    mkdir -p /etc/nginx/pki && \
+    chmod 400 /etc/nginx/pki && \
 ## Finish
     rm -rf /var/cache/apk/* /tmp/*
 
