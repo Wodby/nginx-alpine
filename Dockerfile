@@ -1,5 +1,5 @@
 FROM wodby/nginx-actions-alpine:dev
-MAINTAINER Ivan Gaas <ivan.gaas@gmail.com>
+MAINTAINER Wodby <hello@wodby.com>
 
 RUN export NGX_VER="1.9.3" && \
     export NGX_UP_VER="0.9.1" && \
