@@ -1,4 +1,4 @@
-FROM wodby/nginx-actions-alpine:v1.0.3
+FROM wodby/base-alpine:dev
 MAINTAINER Wodby <hello@wodby.com>
 
 RUN export NGX_VER="1.9.3" && \
@@ -44,3 +44,5 @@ RUN export NGX_VER="1.9.3" && \
     chmod 400 /etc/nginx/pki && \
 ## Finish
     rm -rf /var/cache/apk/* /tmp/*
+
+COPY rootfs /
