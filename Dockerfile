@@ -44,3 +44,6 @@ RUN export NGX_VER="1.9.3" && \
     chmod 400 /etc/nginx/pki && \
 ## Finish
     rm -rf /var/cache/apk/* /tmp/*
+
+COPY rootfs /
+
