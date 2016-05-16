@@ -1,4 +1,4 @@
-FROM wodby/nginx-actions-alpine:edge
+FROM wodby/base-alpine:edge
 MAINTAINER Wodby <hello@wodby.com>
 
 RUN export NGX_VER="1.9.3" && \
