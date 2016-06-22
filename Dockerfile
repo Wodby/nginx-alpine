@@ -1,4 +1,4 @@
-FROM wodby/base-alpine:edge
+FROM wodby/base-alpine:3.4
 MAINTAINER Wodby <hello@wodby.com>
 
 RUN export NGX_VER="1.9.3" && \
