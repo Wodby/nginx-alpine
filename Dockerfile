@@ -1,4 +1,4 @@
-FROM wodby/base-alpine:3.4
+FROM wodby/base-alpine:edge
 MAINTAINER Wodby <hello@wodby.com>
 
 RUN export NGX_VER="1.10.1" && \
@@ -32,9 +32,9 @@ RUN export NGX_VER="1.10.1" && \
       --add-module=/tmp/nginx-upload-progress-module-${NGX_UP_VER}/ --add-module=/tmp/lua-nginx-module-${NGX_LUA_VER}/ \
       --add-module=/tmp/naxsi-${NGX_NXS_VER}/naxsi_src/ && make -j2 && make install && \
 ## Clean packages
-    apk del openssl-dev pcre-dev zlib-dev luajit-dev geoip-dev build-base autoconf libtool && \
+    apk del libressl-dev pcre-dev zlib-dev luajit-dev geoip-dev build-base autoconf libtool && \
 ## Install depends
-    apk add --update libssl1.0 libcrypto1.0 pcre zlib luajit geoip && \
+    apk add --update libressl2.4-libssl libressl2.4-libcrypto pcre zlib luajit geoip && \
     addgroup -S -g 101 nginx && adduser -HS -u 100 -h /var/www/localhost/htdocs -s /sbin/nologin -G nginx nginx && \
     adduser nginx wodby && \
     mkdir -p /var/lib/nginx/tmp && \
