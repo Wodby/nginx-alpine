@@ -3,20 +3,31 @@ MAINTAINER Wodby <hello@wodby.com>
 
 RUN export NGX_VER="1.10.1" && \
     export NGX_UP_VER="0.9.1" && \
-    export NGX_LUA_VER="0.10.5" && \
     export NGX_NDK_VER="0.3.0" && \
     export NGX_NXS_VER="0.54" && \
-    export LUAJIT_LIB="/usr/lib/" && \
-    export LUAJIT_INC="/usr/include/luajit-2.0/" && \
-# Prepare build tools for compiling some applications from source code
-    apk --update add openssl-dev pcre-dev zlib-dev luajit-dev geoip-dev build-base autoconf libtool && \
-## Download nginx and its modules source code
+
+    addgroup -S -g 101 nginx && \
+    adduser -HS -u 100 -h /var/www/localhost/htdocs -s /sbin/nologin -G nginx nginx && \
+    adduser nginx wodby && \
+
+    # Prepare build tools for compiling some applications from source code
+    apk --update add \
+        libressl-dev \
+        pcre-dev \
+        zlib-dev \
+        geoip-dev \
+        build-base \
+        autoconf \
+        libtool \
+        && \
+
+    # Download nginx and its modules source code
     wget -qO- http://nginx.org/download/nginx-${NGX_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/simpl/ngx_devel_kit/archive/v${NGX_NDK_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/openresty/lua-nginx-module/archive/v${NGX_LUA_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/nbs-system/naxsi/archive/${NGX_NXS_VER}.tar.gz | tar xz -C /tmp/ && \
-## Make and install nginx with module
+
+    # Make and install nginx with module
     cd /tmp/nginx-${NGX_VER} && \
     ./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf \
       --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx/nginx.pid \
@@ -29,20 +40,17 @@ RUN export NGX_VER="1.10.1" && \
       --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-mail \
       --with-mail_ssl_module --with-http_v2_module --with-ipv6 --with-threads --with-stream --with-stream_ssl_module \
       --with-http_geoip_module --with-ld-opt="-Wl,-rpath,/usr/lib/" --add-module=/tmp/ngx_devel_kit-${NGX_NDK_VER}/ \
-      --add-module=/tmp/nginx-upload-progress-module-${NGX_UP_VER}/ --add-module=/tmp/lua-nginx-module-${NGX_LUA_VER}/ \
+      --add-module=/tmp/nginx-upload-progress-module-${NGX_UP_VER}/ \
       --add-module=/tmp/naxsi-${NGX_NXS_VER}/naxsi_src/ && make -j2 && make install && \
-## Clean packages
-    apk del libressl-dev pcre-dev zlib-dev luajit-dev geoip-dev build-base autoconf libtool && \
-## Install depends
-    apk add --update libressl2.4-libssl libressl2.4-libcrypto pcre zlib luajit geoip && \
-    addgroup -S -g 101 nginx && adduser -HS -u 100 -h /var/www/localhost/htdocs -s /sbin/nologin -G nginx nginx && \
-    adduser nginx wodby && \
+
     mkdir -p /var/lib/nginx/tmp && \
     chmod 755 /var/lib/nginx && \
     chmod -R 777 /var/lib/nginx/tmp && \
     mkdir -p /etc/nginx/pki && \
     chmod 400 /etc/nginx/pki && \
-## Finish
+
+    # Cleanup
+    apk del *-dev build-base autoconf libtool && \
     rm -rf /var/cache/apk/* /tmp/*
 
 COPY rootfs /
