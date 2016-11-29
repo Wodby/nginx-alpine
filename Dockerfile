@@ -19,6 +19,7 @@ RUN export NGX_VER="1.10.1" && \
         build-base \
         autoconf \
         libtool \
+        geoip \
         && \
 
     # Download nginx and its modules source code
